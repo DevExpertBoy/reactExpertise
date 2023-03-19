@@ -1,0 +1,22 @@
+>>>Redux toolkit installation:->
+   cmd:->
+        #NPM
+        npm install @reduxjs/toolkit
+        #YARN
+        yarn add @reduxjs/toolkit
+>>>Redux core installation:->
+   cmd:->
+        #NPM
+        npm install redux
+        #YARN
+        yarn add redux
+>>>Complementary packages installation:->
+   cmd:->
+        npm install react-redux
+        npm install --save-dev @redux-devtools/core
+
+>>>Adopting template with redux:->
+  #Redux + Plain JS template
+  npm create-react-app my-app --template redux
+  #Redux + Typescript template
+  npm create-react-spp my-app --template redux-Typescript 

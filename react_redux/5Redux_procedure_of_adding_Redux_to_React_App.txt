@@ -1,0 +1,234 @@
+>>>How to add Redux to React App.
+PROCEDURE:->
+Step 1>>>>>>Running a React application means setup file of React App.
+
+            npm install(if needed)
+
+            npx create-react-app my-app
+
+            cd my-app
+
+            npm start
+
+Step 2>>>>>>Import Redux NPM packages.
+            npm install redux react-redux
+
+Step 3>>>>>>Create a Reducer.
+            A reducer is a pure function that accepts 2 parameters:
+
+            state and action:-
+                            state can be anything ,incuding objects.
+                            Action is an object with type property that specifies the type of action as a string.
+                            Let's create a countReducer in src/index.JS
+    e.g:src/index.js 
+        const countReducer = function (state = 0,action){
+           switch(Action.type){
+             case "INCREMENT":
+              return state + 1;
+             case "DECREMENT":
+              return state - 1;
+             default:
+              return state;
+           } 
+        };
+    explaination:
+    The state is initialized as 0(when the app starts).
+
+    we handle 3 types of actions,with the default case returning the original state unchanged.
+
+    The other two cases modify the value of the state and return it as a "new" state.
+
+Step 4>>>>>>Create a Redux Store.
+            The store holds the state as one big gloabal object known as a state tree.
+
+            The store allow us to:
+                     -dispatch actions to modify the state
+                     -subscribe to receive notification about state changes
+                     -retrieve the entire state tree
+
+            Let's import and create the redux store and use our reducer to initialize it.
+
+    e.g:src/index.js
+           ...
+           import {createStore} from 'redux';
+           ...
+           let store = createStore(countReducer);
+           ... 
+
+    explaination:
+    Here ,the entire state tree is just a single reducer.
+
+    nothing complex,we will create more complex state also.
+
+Step 5>>>>>>Wrap the main app component with provider
+            Now,we will connect redux to react using NPM library react-redux.
+
+            Let's import the <provider/>,
+
+            and wrap our main app component with it.
+
+            Also,pass our previously created store into the <Provider/>'s store prop.
+
+      e.g:src/index.js
+             ...
+             import {provider} from 'react-redux';
+             ...
+             const App = () => (
+                <Provider store={store}>
+                  <h1>Helloworld React & Redux!</h1>
+                </Provider>
+             );
+             ReactDOM.render(<App/>,document.getElementById('root'));
+
+        explaination:
+        The <Provider/> will supply our entire component tree with the global state tree.
+
+
+Step 6>>>>>>>Create and connect a container component
+            Container (smart) Components are responsible for pulling state from the Redux store, 
+
+            transforming it, and passing it down to Presentational (dumb) Components.
+
+            Let's convert our <h1> tag into a Container Component.
+
+        e.g:src/index.js
+                ...
+                import { Provider, connect } from 'react-redux';
+                ...
+                const Component = () => <h1>Helloworld React & Redux!</h1>;
+
+                const Container = connect()(Component);
+
+                const App = () => (
+                <Provider store={store}>
+                    <Container />
+                </Provider>
+                );
+                ...
+
+        explaination:
+        We import the connect function from react-redux.
+
+        We refactor out our original <h1> component into Component.
+
+        Then, we create a new container component, called Container.
+
+        The first () invokes the connect function and binds to the Redux store. 
+
+        Then, we invoke the returned function our Presentational Component called Component.
+
+        Now, we've offically connected our Component to Redux, but it doesn't do anything special right now.
+
+Step 7>>>>>>>Select and Transform State from Redux Store
+       
+       Let's use our Container component to select the state and optionally, transform it.
+
+       e.g:src/index.js
+                ...
+                const mapStateToProps = state => {
+                return {
+                    count: state
+                };
+                };
+                const Container = connect(mapStateToProps)(Component);
+                ...
+
+        explaination:
+        Here, we define a new function called mapStateToProps that literally maps or links
+        the state from the Redux store to the component props we wish to pass to our downstream component.   
+
+         In this case, we convert the state (which is just a number from countReducer) to a prop called count.
+
+         
+Step 8>>>>>>>Use the State in the Presentational component.
+            The count prop is now being passed to our Component.
+
+            Let's declare it as our parameter, and add it to the JSX.
+
+            The sore responsibility of the Presentational Component is to convert props into JSX with little or no logic.
+
+            e.g:src/index.js
+                   const Component = ({count}) => <h1>Helloworld React & Redux! {count}</h1>;
+
+            explaination:
+            Refresh the page and you should now see 0 next to the heading.
+            We are receiving state from Redux store now! But how do we change it? Let take a look at actions.
+
+Step 9>>>>>>>>>Add Buttons to our Presentational Component
+             Now, we're going to add two buttons in our Presentational Component that increment and decrement the count.
+
+             e.g:src/index.js
+                    const Component = ({count, handleIncrementClick, handleDecrementClick}) => (
+                        <div>
+                            <h1>Helloworld React & Redux! {count}</h1>
+                            <button onClick={handleDecrementClick}>Decrement</button>
+                            <button onClick={handleIncrementClick}>Increment</button>
+                        </div>
+                    );
+
+            explaination:
+            Notice that we are passing the two click handlers as props to the two buttons. 
+            We will provide these callbacks from the Container for dispatching actions to the Redux store.
+            These buttons are not functional until we do this.     
+
+Step 10>>>>>>>Pass Callback that Dispatch Actions to Store
+             It's time to map our store dispatch to callback functions.
+
+             e.g:src/index.js
+                    const mapDispatchToProps = dispatch => {
+                        return {
+                            handleIncrementClick: () => dispatch({ type: 'INCREMENT' }),
+                            handleDecrementClick: () => dispatch({type: 'DECREMENT'})
+                        }
+                    };
+                    const Container = connect(mapStateToProps, mapDispatchToProps)(Component);     
+
+            explaination:
+            We pass a second function called mapDispatchToProps to our connect function in the Container component.
+            This function maps the dispatch function from the Redux store to the registered callbacks. 
+            These callbacks are named as the return object's property, and passed to the downstream component as props (handleIncrementClick and handleDecrementClick).
+            Now, it should work! We can modify the state using the buttons!
+
+Step 11>>>>>>>>Refractor the code
+            Code Structure:
+                    src
+                    |
+                    ---------configure-store.js
+                    |
+                    ---------counter 
+                    |        |
+                    |        -----------component.js
+                    |        |
+                    |        -----------container.js
+                    |        |
+                    |        -----------reducer.js
+                    |        
+                    |
+                    ---------index.html 
+                    |
+                    --------index.js 
+
+
+Step 12>>>>>>>>>Project structure of React-Redux Setup.
+                
+
+
+
+
+
+
+          
+
+
+
+       
+
+    
+
+
+
+
+
+
+
+                     

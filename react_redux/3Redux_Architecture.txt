@@ -1,0 +1,14 @@
+>>>Redux Architecture has three main components followed by views.
+
+STORE:->A store is a place where the entire state of our application lists.
+       >Store manages the status of the application and has a dispatch (action) function.
+       >State is like a brain responsible for all moving parts in Redux.
+
+ACTION:->Action is sent or dispatched from the views which are payloads that can be read by reducers.
+        >Action is a pure object created to store the information of the user's event.
+        >Action includes information such as type of action ,time of occurance,location of occurance,
+         its coordinates and which state it aims to change.
+
+REDUCER:->Reducer read the payloads from the actions and then updates the store via the state accordingly.
+         >Reducer is a pure function to return a new state from the initial state.
+

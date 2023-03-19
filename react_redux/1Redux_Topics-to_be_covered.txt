@@ -1,0 +1,17 @@
+#What is Redux?
+#Why we need it?
+#Inderstanding it with Diagram.
+#How it works?
+#Topics of series:-
+1>Introduction
+2>Redux Architecture
+3>Props in Redux
+4>Install redux with React
+5>Make necesasary files and wrapper
+6>ActioReducern
+7>Root Reducer
+8>Container
+9>Middleware
+10>Selector
+11>A Project wit Redux
+12>Interview Questions

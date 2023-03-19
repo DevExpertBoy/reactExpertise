@@ -1,0 +1,35 @@
+>>>Prerequisites:->Fundamentals of React.
+
+>>>Redux is basically a container where we can store our whole application data.
+
+>>>Redux is called as state management.
+
+>>>Redux is a predicatable state container for javascript apps.
+
+>>>Redux is for javascript apps.
+
+>>Redux is a state container.
+
+>>>Redux doesn't belong to the component state.
+
+>>>Redux is not tied to React.
+
+>>>Redux can be used with React,Angular,Vue or even vnilla javascript.
+
+>>>Redux is a library for javascript applications.
+
+>>>In Redux,all state transitions are explicit 
+   and it is possible to keep track of them.
+   The changes to your application's state become predicatable.
+
+>>>Redux stores the state of our application.
+
+>>>Consider a react app -state of a component,
+   state of an app is he state reprsemted by all the individual components of that app.
+
+>>>Redux will store and manage the application state.
+
+>>>React-redux is a library that provides binding to use React and Redux together ina n application.
+
+
+

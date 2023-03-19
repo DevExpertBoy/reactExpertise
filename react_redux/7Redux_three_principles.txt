@@ -1,0 +1,72 @@
+>>>>>>>Three core concepts.
+      >>>Cake shop scenario       |    Redux       |  Purpose
+         ---------------------------------------------------------------------------------------
+         > Shop                    |   Store        |  Holds the state of our application
+         > Intention to BUY_CAKE   |   Action       |  Describes what happend
+         > Shopkeeper              |   Reducer      |  Ties the store and action together
+
+      >>>A store taht holds the state of our application.
+      >>>An Action that Describes the changes in state of the application.
+      >>>A Reducer which actually carries out the state transition depending on the action.
+
+      >>>First Principle:-
+         >The state of our whole application is stored in an object tree within a single store.
+
+         >Maintain our application state in a single object which would be managed by the Redux store.
+
+         e.g:Cake Shop:-
+             Let's ssume we are tracking the number of cakes on the shelf.
+             ie;
+             {
+               numberOfCakes:10
+             }
+
+      >>>Second Principle:-
+         >The only way to chnage the state is to emit an action,an object Describing what happened.
+
+         >To update the state of our app,we need to let redux know about that with an action.
+
+         >Not allowed to directly update the state object.
+
+         e.g:Cake Shop:-
+             Let's the shopkeeper know about our action BUY_CAKE
+             ie;
+             {
+                type:BUY_CAKE
+             }
+
+      >>>Third Principle:-
+         >To specify how the state tree is transformed by actions,we write pure reducers.
+
+         >Reducer - (previousState,action)=>newState
+
+         e.g:Cake Shop:-
+             Let's assumed as reducer is shopkeeper.
+             ie;
+             const reducer = (state,action)=>{
+                switch(action.type){
+                    case BUY_CAKE:return {
+                        numberOfCakes:state.numberOfCakes - 1
+                    }
+                }
+             }
+
+
+>>>>>>>>Working cycle of Redux:-
+        >Our application is a javascript app.
+        >application state is stored in Redux store separately in Redux store.
+        >And application is always subscribed to Redux store.
+        >Carful that application does not update directly the state.
+        >For app to be update the state either emit or dispatch an action.
+        >Dispatch term is used in redux so understand the dispatch instead of emit.
+        >Once an action has been dispatched 
+        >Then reducer handles that action
+        >And update the current state
+        > As soon as state is updated 
+        >Then value is passed to the application
+        >Because the application is subscribed to the redux store
+        >So ,the is the working cycle of Redux.
+
+
+
+
